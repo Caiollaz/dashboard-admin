@@ -18,25 +18,22 @@ const authConfig = {
         }
       },
       async authorize(credentials, req) {
-        const user = {
-          id: '1',
-          name: 'John',
-          email: credentials?.email as string
-        };
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
+        if (credentials?.email === 'caiolabella2016@gmail.com') {
+          const user = {
+            id: '1',
+            name: 'Caio',
+            email: credentials.email
+          };
+
           return user;
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
           return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       }
     })
   ],
   pages: {
-    signIn: '/' //sigin page
+    signIn: '/'
   }
 } satisfies NextAuthConfig;
 

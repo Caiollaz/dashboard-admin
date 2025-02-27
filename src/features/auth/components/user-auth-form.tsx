@@ -19,7 +19,7 @@ import * as z from 'zod';
 import GithubSignInButton from './github-auth-button';
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email address' })
+  email: z.string().email({ message: 'Digite um endereço de email válido' })
 });
 
 type UserFormValue = z.infer<typeof formSchema>;
@@ -29,7 +29,7 @@ export default function UserAuthForm() {
   const callbackUrl = searchParams.get('callbackUrl');
   const [loading, startTransition] = useTransition();
   const defaultValues = {
-    email: 'demo@gmail.com'
+    email: ''
   };
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),
@@ -42,7 +42,7 @@ export default function UserAuthForm() {
         email: data.email,
         callbackUrl: callbackUrl ?? '/dashboard'
       });
-      toast.success('Signed In Successfully!');
+      toast.success('Login realizado com sucesso!');
     });
   };
 
@@ -62,7 +62,7 @@ export default function UserAuthForm() {
                 <FormControl>
                   <Input
                     type='email'
-                    placeholder='Enter your email...'
+                    placeholder='Digite seu email...'
                     disabled={loading}
                     {...field}
                   />
@@ -73,7 +73,7 @@ export default function UserAuthForm() {
           />
 
           <Button disabled={loading} className='ml-auto w-full' type='submit'>
-            Continue With Email
+            Continue com o Email
           </Button>
         </form>
       </Form>
@@ -83,7 +83,7 @@ export default function UserAuthForm() {
         </div>
         <div className='relative flex justify-center text-xs uppercase'>
           <span className='bg-background px-2 text-muted-foreground'>
-            Or continue with
+            Ou continue com
           </span>
         </div>
       </div>
