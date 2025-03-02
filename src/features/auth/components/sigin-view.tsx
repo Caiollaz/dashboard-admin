@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import UserAuthForm from './user-auth-form';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Autenticação',
@@ -59,7 +60,9 @@ export default function SignInViewPage() {
               Digite seu email e senha para acessar o sistemas
             </p>
           </div>
-          <UserAuthForm />
+          <Suspense fallback={<div>Carregando formulário...</div>}>
+            <UserAuthForm />
+          </Suspense>
         </div>
       </div>
     </div>
