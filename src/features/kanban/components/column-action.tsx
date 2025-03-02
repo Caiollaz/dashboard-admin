@@ -31,7 +31,6 @@ export function ColumnActions({
   title: string;
   id: UniqueIdentifier;
 }) {
-  const [open, setIsOpen] = React.useState(false);
   const [name, setName] = React.useState(title);
   const updateCol = useTaskStore((state) => state.updateCol);
   const removeCol = useTaskStore((state) => state.removeCol);
@@ -73,7 +72,7 @@ export function ColumnActions({
               }, 500);
             }}
           >
-            Rename
+            Renomear
           </DropdownMenuItem>
           <DropdownMenuSeparator />
 
@@ -81,7 +80,7 @@ export function ColumnActions({
             onSelect={() => setShowDeleteDialog(true)}
             className='text-red-600'
           >
-            Delete Section
+            Excluir seção
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -89,26 +88,26 @@ export function ColumnActions({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure want to delete column?
+              Tem certeza que deseja excluir a seção?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              NOTE: All tasks related to this category will also be deleted.
+              NOTE: Todas as tarefas relacionadas a esta categoria também serão
+              excluídas.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <Button
               variant='destructive'
               onClick={() => {
-                // yes, you have to set a timeout
                 setTimeout(() => (document.body.style.pointerEvents = ''), 100);
 
                 setShowDeleteDialog(false);
                 removeCol(id);
-                toast('This column has been deleted.');
+                toast('Esta coluna foi excluída.');
               }}
             >
-              Delete
+              Excluir
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

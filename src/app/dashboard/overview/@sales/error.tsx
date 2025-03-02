@@ -7,9 +7,9 @@ export default function StatsError({ error }: { error: Error }) {
   return (
     <Alert variant='destructive'>
       <AlertCircle className='h-4 w-4' />
-      <AlertTitle>Error</AlertTitle>
+      <AlertTitle>Erro</AlertTitle>
       <AlertDescription>
-        Failed to load statistics: {error.message}
+        Falha ao carregar as estatísticas: {error.message}
       </AlertDescription>
     </Alert>
   );

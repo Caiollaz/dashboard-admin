@@ -6,8 +6,8 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn Dashboard Starter',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: 'Legana',
+  description: 'Controle e dados do seu sistema'
 };
 
 export default async function DashboardLayout({
@@ -15,18 +15,16 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Persisting the sidebar state in the cookie.
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get('sidebar:state')?.value === 'true';
+
   return (
     <KBar>
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar />
         <SidebarInset>
           <Header />
-          {/* page main content */}
           {children}
-          {/* page main content ends */}
         </SidebarInset>
       </SidebarProvider>
     </KBar>

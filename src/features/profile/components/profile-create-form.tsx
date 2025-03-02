@@ -45,12 +45,12 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
-  const title = initialData ? 'Edit product' : 'Create Your Profile';
+  const title = initialData ? 'Editar produto' : 'Criar seu perfil';
   const description = initialData
-    ? 'Edit a product.'
-    : 'To create your resume, we first need some basic information about you.';
-  const toastMessage = initialData ? 'Product updated.' : 'Product created.';
-  const action = initialData ? 'Save changes' : 'Create';
+    ? 'Editar um produto.'
+    : 'Para criar seu currículo, primeiro precisamos de algumas informações básicas sobre você.';
+  const toastMessage = initialData ? 'Produto atualizado.' : 'Produto criado.';
+  const action = initialData ? 'Salvar alterações' : 'Criar';
   const [previousStep, setPreviousStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({});
@@ -126,13 +126,13 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
 
   const steps = [
     {
-      id: 'Step 1',
-      name: 'Personal Information',
+      id: 'Passo 1',
+      name: 'Informações Pessoais',
       fields: ['firstname', 'lastname', 'email', 'contactno', 'country', 'city']
     },
     {
-      id: 'Step 2',
-      name: 'Professional Informations',
+      id: 'Passo 2',
+      name: 'Informações Profissionais',
       // fields are mapping and flattening for the error to be trigger  for the dynamic fields
       fields: fields
         ?.map((_, index) => [
@@ -146,7 +146,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
         ])
         .flat()
     },
-    { id: 'Step 3', name: 'Complete' }
+    { id: 'Passo 3', name: 'Completo' }
   ];
 
   const next = async () => {
@@ -174,8 +174,8 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
     }
   };
 
-  const countries = [{ id: 'wow', name: 'india' }];
-  const cities = [{ id: '2', name: 'kerala' }];
+  const countries = [{ id: 'brl', name: 'Brasil' }];
+  const cities = [{ id: 'cwb', name: 'Curitiba' }];
 
   return (
     <>
@@ -246,11 +246,11 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                   name='firstname'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>First Name</FormLabel>
+                      <FormLabel>Nome</FormLabel>
                       <FormControl>
                         <Input
                           disabled={loading}
-                          placeholder='John'
+                          placeholder='Digite seu nome'
                           {...field}
                         />
                       </FormControl>
@@ -263,11 +263,11 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                   name='lastname'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Last Name</FormLabel>
+                      <FormLabel>Sobrenome</FormLabel>
                       <FormControl>
                         <Input
                           disabled={loading}
-                          placeholder='Doe'
+                          placeholder='Digite seu sobrenome'
                           {...field}
                         />
                       </FormControl>
@@ -284,7 +284,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                       <FormControl>
                         <Input
                           disabled={loading}
-                          placeholder='johndoe@gmail.com'
+                          placeholder='Digite seu email'
                           {...field}
                         />
                       </FormControl>
@@ -297,11 +297,11 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                   name='contactno'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Contact Number</FormLabel>
+                      <FormLabel>Número de contato</FormLabel>
                       <FormControl>
                         <Input
                           type='number'
-                          placeholder='Enter you contact number'
+                          placeholder='Digite seu número de contato'
                           disabled={loading}
                           {...field}
                         />
@@ -315,7 +315,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                   name='country'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Country</FormLabel>
+                      <FormLabel>País</FormLabel>
                       <Select
                         disabled={loading}
                         onValueChange={field.onChange}
@@ -326,12 +326,11 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                           <SelectTrigger>
                             <SelectValue
                               defaultValue={field.value}
-                              placeholder='Select a country'
+                              placeholder='Selecione um país'
                             />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {/* @ts-ignore  */}
                           {countries.map((country) => (
                             <SelectItem key={country.id} value={country.id}>
                               {country.name}
@@ -348,7 +347,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                   name='city'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>City</FormLabel>
+                      <FormLabel>Cidade</FormLabel>
                       <Select
                         disabled={loading}
                         onValueChange={field.onChange}
@@ -359,7 +358,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                           <SelectTrigger>
                             <SelectValue
                               defaultValue={field.value}
-                              placeholder='Select a city'
+                              placeholder='Selecione uma cidade'
                             />
                           </SelectTrigger>
                         </FormControl>
@@ -394,7 +393,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                           errors?.jobs?.[index] && 'text-red-700'
                         )}
                       >
-                        {`Work Experience ${index + 1}`}
+                        {`Experiência Profissional ${index + 1}`}
 
                         <Button
                           variant='outline'
@@ -421,7 +420,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                             name={`jobs.${index}.jobtitle`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Job title</FormLabel>
+                                <FormLabel>Cargo</FormLabel>
                                 <FormControl>
                                   <Input
                                     type='text'
@@ -438,7 +437,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                             name={`jobs.${index}.employer`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Employer</FormLabel>
+                                <FormLabel>Empregador</FormLabel>
                                 <FormControl>
                                   <Input
                                     type='text'
@@ -455,7 +454,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                             name={`jobs.${index}.startdate`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Start date</FormLabel>
+                                <FormLabel>Data de início</FormLabel>
                                 <FormControl>
                                   <Input
                                     type='date'
@@ -472,7 +471,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                             name={`jobs.${index}.enddate`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>End date</FormLabel>
+                                <FormLabel>Data de término</FormLabel>
                                 <FormControl>
                                   <Input
                                     type='date'
@@ -489,7 +488,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                             name={`jobs.${index}.jobcountry`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Job country</FormLabel>
+                                <FormLabel>País</FormLabel>
                                 <Select
                                   disabled={loading}
                                   onValueChange={field.onChange}
@@ -500,7 +499,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                                     <SelectTrigger>
                                       <SelectValue
                                         defaultValue={field.value}
-                                        placeholder='Select your job country'
+                                        placeholder='Selecione seu país de trabalho'
                                       />
                                     </SelectTrigger>
                                   </FormControl>
@@ -524,7 +523,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                             name={`jobs.${index}.jobcity`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Job city</FormLabel>
+                                <FormLabel>Cidade</FormLabel>
                                 <Select
                                   disabled={loading}
                                   onValueChange={field.onChange}
@@ -535,7 +534,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                                     <SelectTrigger>
                                       <SelectValue
                                         defaultValue={field.value}
-                                        placeholder='Select your job city'
+                                        placeholder='Selecione sua cidade de trabalho'
                                       />
                                     </SelectTrigger>
                                   </FormControl>
@@ -573,24 +572,20 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                       })
                     }
                   >
-                    Add More
+                    Adicionar mais
                   </Button>
                 </div>
               </>
             )}
             {currentStep === 2 && (
               <div>
-                <h1>Completed</h1>
+                <h1>Completo</h1>
                 <pre className='whitespace-pre-wrap'>
                   {JSON.stringify(data)}
                 </pre>
               </div>
             )}
           </div>
-
-          {/* <Button disabled={loading} className="ml-auto" type="submit">
-            {action}
-          </Button> */}
         </form>
       </Form>
       {/* Navigation */}

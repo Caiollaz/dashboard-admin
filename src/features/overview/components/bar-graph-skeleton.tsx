@@ -22,7 +22,6 @@ export function BarGraphSkeleton() {
         </div>
       </CardHeader>
       <CardContent className='px-2 sm:p-6'>
-        {/* Bar-like shapes */}
         <div className='flex aspect-auto h-[280px] w-full items-end justify-around gap-2 pt-8'>
           {Array.from({ length: 12 }).map((_, i) => (
             <Skeleton

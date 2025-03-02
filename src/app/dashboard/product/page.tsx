@@ -32,15 +32,12 @@ export default async function Page(props: pageProps) {
     <PageContainer scrollable={false}>
       <div className='flex flex-1 flex-col space-y-4'>
         <div className='flex items-start justify-between'>
-          <Heading
-            title='Products'
-            description='Manage products (Server side table functionalities.)'
-          />
+          <Heading title='Produtos' description='Gerencie produtos' />
           <Link
             href='/dashboard/product/new'
             className={cn(buttonVariants(), 'text-xs md:text-sm')}
           >
-            <Plus className='mr-2 h-4 w-4' /> Add New
+            <Plus className='mr-2 h-4 w-4' /> Adicionar novo
           </Link>
         </div>
         <Separator />

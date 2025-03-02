@@ -12,7 +12,6 @@ export function PieGraphSkeleton() {
       </CardHeader>
       <CardContent className='p-6'>
         <div className='flex h-[280px] items-center justify-center'>
-          {/* Circular skeleton for pie chart */}
           <Skeleton className='h-[300px] w-[300px] rounded-full' />
         </div>
       </CardContent>

@@ -27,9 +27,9 @@ export default function StatsError({ error, reset }: StatsErrorProps) {
         <div className='flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6'>
           <Alert variant='destructive' className='border-none'>
             <AlertCircle className='h-4 w-4' />
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle>Erro</AlertTitle>
             <AlertDescription className='mt-2'>
-              Failed to load statistics: {error.message}
+              Falha ao carregar as estatísticas: {error.message}
             </AlertDescription>
           </Alert>
         </div>
@@ -37,7 +37,7 @@ export default function StatsError({ error, reset }: StatsErrorProps) {
       <CardContent className='flex h-[316px] items-center justify-center p-6'>
         <div className='text-center'>
           <p className='mb-4 text-sm text-muted-foreground'>
-            Unable to display statistics at this time
+            Não é possível exibir as estatísticas no momento
           </p>
           <Button
             onClick={() => reload()}
@@ -45,7 +45,7 @@ export default function StatsError({ error, reset }: StatsErrorProps) {
             className='min-w-[120px]'
             disabled={isPending}
           >
-            Try again
+            Tentar novamente
           </Button>
         </div>
       </CardContent>

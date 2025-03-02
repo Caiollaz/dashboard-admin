@@ -36,12 +36,16 @@ export default function SignInViewPage() {
           >
             <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
           </svg>
-          Logo
+          Legana
         </div>
         <div className='relative z-20 mt-auto'>
           <blockquote className='space-y-2'>
-            <p className='text-lg'>&ldquo;Oh meu deus!&rdquo;</p>
-            <footer className='text-sm'>Aleatorio</footer>
+            <p className='text-lg'>
+              &ldquo;Não somos anjos nem demônios, somos apenas meros humanos
+              fracos que não são capazes de salvar nem uma criança
+              indefesa.&rdquo;
+            </p>
+            <footer className='text-sm'>Edward Elric</footer>
           </blockquote>
         </div>
       </div>
@@ -52,7 +56,7 @@ export default function SignInViewPage() {
               Bem vindo de volta!
             </h1>
             <p className='text-sm text-muted-foreground'>
-              Qualquer problema deixe com a gente.
+              Digite seu email e senha para acessar o sistemas
             </p>
           </div>
           <UserAuthForm />

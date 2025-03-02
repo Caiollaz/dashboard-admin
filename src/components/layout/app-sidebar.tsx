@@ -8,7 +8,6 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -31,23 +30,14 @@ import {
   useSidebar
 } from '@/components/ui/sidebar';
 import { navItems } from '@/constants/data';
-import {
-  BadgeCheck,
-  Bell,
-  ChevronRight,
-  ChevronsUpDown,
-  CreditCard,
-  GalleryVerticalEnd,
-  LogOut
-} from 'lucide-react';
+import { ChevronRight, ChevronsUpDown, GalleryVerticalEnd } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import * as React from 'react';
 import { Icons } from '../icons';
 
 export const company = {
-  name: 'Acme Inc',
+  name: 'Legana',
   logo: GalleryVerticalEnd,
   plan: 'Enterprise'
 };
@@ -72,7 +62,7 @@ export default function AppSidebar() {
       </SidebarHeader>
       <SidebarContent className='overflow-x-hidden'>
         <SidebarGroup>
-          <SidebarGroupLabel>Overview</SidebarGroupLabel>
+          <SidebarGroupLabel>Visão Geral</SidebarGroupLabel>
           <SidebarMenu>
             {navItems.map((item) => {
               const Icon = item.icon ? Icons[item.icon] : Icons.logo;
@@ -189,25 +179,8 @@ export default function AppSidebar() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <BadgeCheck />
-                    Account
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <CreditCard />
-                    Billing
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Bell />
-                    Notifications
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => signOut()}>
-                  <LogOut />
-                  Log out
+                  Sair
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

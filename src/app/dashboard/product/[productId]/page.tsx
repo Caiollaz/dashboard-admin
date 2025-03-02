@@ -21,3 +21,5 @@ export default async function Page(props: PageProps) {
     </PageContainer>
   );
 }
+
+export const revalidate = 3600; // Revalidar a cada hora em vez de a cada requisição

@@ -20,10 +20,12 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Product } from '@/constants/mock-api';
+import { Product } from '@/constants/data';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { CATEGORY_OPTIONS } from './product-tables/use-product-table-filters';
+import { useEffect } from 'react';
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -78,6 +80,11 @@ export default function ProductForm({
     console.log(values);
   }
 
+  useEffect(() => {
+    // Se este código estiver modificando o estado e não tiver dependências corretas
+    // pode causar reloads infinitos
+  }, []);
+
   return (
     <Card className='mx-auto w-full'>
       <CardHeader>
@@ -120,9 +127,12 @@ export default function ProductForm({
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Product Name</FormLabel>
+                    <FormLabel>Nome do produto</FormLabel>
                     <FormControl>
-                      <Input placeholder='Enter product name' {...field} />
+                      <Input
+                        placeholder='Digite o nome do produto'
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -133,24 +143,22 @@ export default function ProductForm({
                 name='category'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>Categoria</FormLabel>
                     <Select
                       onValueChange={(value) => field.onChange(value)}
                       value={field.value[field.value.length - 1]}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder='Select categories' />
+                          <SelectValue placeholder='Selecione uma categoria' />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value='beauty'>Beauty Products</SelectItem>
-                        <SelectItem value='electronics'>Electronics</SelectItem>
-                        <SelectItem value='clothing'>Clothing</SelectItem>
-                        <SelectItem value='home'>Home & Garden</SelectItem>
-                        <SelectItem value='sports'>
-                          Sports & Outdoors
-                        </SelectItem>
+                        {CATEGORY_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -162,12 +170,12 @@ export default function ProductForm({
                 name='price'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Price</FormLabel>
+                    <FormLabel>Preço</FormLabel>
                     <FormControl>
                       <Input
                         type='number'
                         step='0.01'
-                        placeholder='Enter price'
+                        placeholder='Digite o preço'
                         {...field}
                       />
                     </FormControl>
@@ -181,10 +189,10 @@ export default function ProductForm({
               name='description'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Descrição</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder='Enter product description'
+                      placeholder='Digite a descrição do produto'
                       className='resize-none'
                       {...field}
                     />
@@ -193,7 +201,7 @@ export default function ProductForm({
                 </FormItem>
               )}
             />
-            <Button type='submit'>Add Product</Button>
+            <Button type='submit'>Adicionar produto</Button>
           </form>
         </Form>
       </CardContent>

@@ -31,27 +31,39 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { parseAsInteger, useQueryState } from 'nuqs';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData, any>[];
   data: TData[];
   totalItems: number;
   pageSizeOptions?: number[];
+  filters?: React.ReactNode[];
+  searchField?: string;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData>({
   columns,
   data,
   totalItems,
-  pageSizeOptions = [10, 20, 30, 40, 50]
-}: DataTableProps<TData, TValue>) {
+  pageSizeOptions = [10, 20, 30, 40, 50],
+  filters,
+  searchField
+}: DataTableProps<TData>) {
   const [currentPage, setCurrentPage] = useQueryState(
     'page',
-    parseAsInteger.withOptions({ shallow: false }).withDefault(1)
+    parseAsInteger
+      .withOptions({
+        shallow: true,
+        history: 'replace'
+      })
+      .withDefault(1)
   );
   const [pageSize, setPageSize] = useQueryState(
     'limit',
     parseAsInteger
-      .withOptions({ shallow: false, history: 'push' })
+      .withOptions({
+        shallow: true,
+        history: 'replace'
+      })
       .withDefault(10)
   );
 

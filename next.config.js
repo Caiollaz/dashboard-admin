@@ -14,7 +14,8 @@ const nextConfig = {
       }
     ]
   },
-  transpilePackages: ['geist']
+  transpilePackages: ['geist'],
+  serverExternalPackages: ['bcrypt']
 };
 
 module.exports = nextConfig;

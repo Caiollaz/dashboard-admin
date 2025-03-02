@@ -12,24 +12,53 @@ import { AreaGraph } from './area-graph';
 import { BarGraph } from './bar-graph';
 import { PieGraph } from './pie-graph';
 import { RecentSales } from './recent-sales';
+import { UserGreeting } from '@/app/dashboard/overview/user-greeting';
+import { useEffect, useState } from 'react';
+import { AreaGraphSkeleton } from './area-graph-skeleton';
+import { BarGraphSkeleton } from './bar-graph-skeleton';
+import { PieGraphSkeleton } from './pie-graph-skeleton';
+import { RecentSalesSkeleton } from './recent-sales-skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function OverViewPage() {
+  const [loading, setLoading] = useState(true);
+  const [dashboardData, setDashboardData] = useState({
+    revenue: { total: 0, percentage: 0 },
+    subscriptions: { total: 0, percentage: 0 },
+    sales: { total: 0, percentage: 0 },
+    activeUsers: { total: 0, since: 0 }
+  });
+
+  useEffect(() => {
+    async function fetchDashboardData() {
+      try {
+        const response = await fetch('/api/dashboard/overview');
+        const data = await response.json();
+        setDashboardData(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Erro ao buscar dados do dashboard:', error);
+        setLoading(false);
+      }
+    }
+
+    fetchDashboardData();
+  }, []);
+
   return (
     <PageContainer>
       <div className='flex flex-1 flex-col space-y-2'>
         <div className='flex items-center justify-between space-y-2'>
-          <h2 className='text-2xl font-bold tracking-tight'>
-            Hi, Welcome back 👋
-          </h2>
+          <UserGreeting />
           <div className='hidden items-center space-x-2 md:flex'>
             <Button>Download</Button>
           </div>
         </div>
         <Tabs defaultValue='overview' className='space-y-4'>
           <TabsList>
-            <TabsTrigger value='overview'>Overview</TabsTrigger>
+            <TabsTrigger value='overview'>Visão Geral</TabsTrigger>
             <TabsTrigger value='analytics' disabled>
-              Analytics
+              Análises
             </TabsTrigger>
           </TabsList>
           <TabsContent value='overview' className='space-y-4'>
@@ -37,7 +66,7 @@ export default function OverViewPage() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Total Revenue
+                    Receita Total
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -53,16 +82,36 @@ export default function OverViewPage() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>$45,231.89</div>
+                  <div className='text-2xl font-bold'>
+                    {loading ? (
+                      <Skeleton className='h-8 w-32' />
+                    ) : (
+                      `R$ ${dashboardData.revenue.total.toLocaleString(
+                        'pt-BR',
+                        {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        }
+                      )}`
+                    )}
+                  </div>
                   <p className='text-xs text-muted-foreground'>
-                    +20.1% from last month
+                    {loading ? (
+                      <Skeleton className='h-4 w-40' />
+                    ) : (
+                      `${
+                        dashboardData.revenue.percentage > 0 ? '+' : ''
+                      }${dashboardData.revenue.percentage.toFixed(
+                        1
+                      )}% em relação ao mês anterior`
+                    )}
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Subscriptions
+                    Assinaturas
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -80,15 +129,29 @@ export default function OverViewPage() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+2350</div>
+                  <div className='text-2xl font-bold'>
+                    {loading ? (
+                      <Skeleton className='h-8 w-32' />
+                    ) : (
+                      `+${dashboardData.subscriptions.total}`
+                    )}
+                  </div>
                   <p className='text-xs text-muted-foreground'>
-                    +180.1% from last month
+                    {loading ? (
+                      <Skeleton className='h-4 w-40' />
+                    ) : (
+                      `${
+                        dashboardData.subscriptions.percentage > 0 ? '+' : ''
+                      }${dashboardData.subscriptions.percentage.toFixed(
+                        1
+                      )}% em relação ao mês anterior`
+                    )}
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>Sales</CardTitle>
+                  <CardTitle className='text-sm font-medium'>Vendas</CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 24 24'
@@ -104,16 +167,30 @@ export default function OverViewPage() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+12,234</div>
+                  <div className='text-2xl font-bold'>
+                    {loading ? (
+                      <Skeleton className='h-8 w-32' />
+                    ) : (
+                      `+${dashboardData.sales.total}`
+                    )}
+                  </div>
                   <p className='text-xs text-muted-foreground'>
-                    +19% from last month
+                    {loading ? (
+                      <Skeleton className='h-4 w-40' />
+                    ) : (
+                      `${
+                        dashboardData.sales.percentage > 0 ? '+' : ''
+                      }${dashboardData.sales.percentage.toFixed(
+                        1
+                      )}% em relação ao mês anterior`
+                    )}
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Active Now
+                    Ativos Agora
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -129,33 +206,47 @@ export default function OverViewPage() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+573</div>
+                  <div className='text-2xl font-bold'>
+                    {loading ? (
+                      <Skeleton className='h-8 w-32' />
+                    ) : (
+                      `+${dashboardData.activeUsers.total}`
+                    )}
+                  </div>
                   <p className='text-xs text-muted-foreground'>
-                    +201 since last hour
+                    {loading ? (
+                      <Skeleton className='h-4 w-40' />
+                    ) : (
+                      `+${dashboardData.activeUsers.since} desde a última hora`
+                    )}
                   </p>
                 </CardContent>
               </Card>
             </div>
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
               <div className='col-span-4'>
-                <BarGraph />
+                {loading ? <BarGraphSkeleton /> : <BarGraph />}
               </div>
               <Card className='col-span-4 md:col-span-3'>
                 <CardHeader>
-                  <CardTitle>Recent Sales</CardTitle>
+                  <CardTitle>Vendas Recentes</CardTitle>
                   <CardDescription>
-                    You made 265 sales this month.
+                    {loading ? (
+                      <Skeleton className='h-4 w-48' />
+                    ) : (
+                      `Você fez ${dashboardData.sales.total} vendas este mês.`
+                    )}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RecentSales />
+                  {loading ? <RecentSalesSkeleton /> : <RecentSales />}
                 </CardContent>
               </Card>
               <div className='col-span-4'>
-                <AreaGraph />
+                {loading ? <AreaGraphSkeleton /> : <AreaGraph />}
               </div>
               <div className='col-span-4 md:col-span-3'>
-                <PieGraph />
+                {loading ? <PieGraphSkeleton /> : <PieGraph />}
               </div>
             </div>
           </TabsContent>

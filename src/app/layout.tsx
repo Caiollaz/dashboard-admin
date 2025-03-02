@@ -8,8 +8,8 @@ import NextTopLoader from 'nextjs-toploader';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: 'Dashboard',
+  description: 'Dashboard para gerenciamento de clientes e vendas'
 };
 
 const lato = Lato({
@@ -23,7 +23,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  let session;
+  try {
+    session = await auth();
+  } catch (error) {
+    console.error('Erro ao autenticar:', error);
+    session = null;
+  }
+
   return (
     <html lang='en' className={`${lato.className}`} suppressHydrationWarning>
       <body className={'overflow-hidden'}>

@@ -1,4 +1,19 @@
-import NextAuth from 'next-auth';
+import type { DefaultSession } from 'next-auth';
+import { getServerSession } from 'next-auth/next';
 import authConfig from './auth.config';
 
-export const { auth, handlers, signOut, signIn } = NextAuth(authConfig);
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string;
+    } & DefaultSession['user'];
+  }
+}
+
+export async function auth() {
+  try {
+    return await getServerSession(authConfig);
+  } catch (error) {
+    return null;
+  }
+}

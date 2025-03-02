@@ -2,35 +2,35 @@ import * as z from 'zod';
 
 export const profileSchema = z.object({
   firstname: z
-    .string()
-    .min(3, { message: 'Product Name must be at least 3 characters' }),
+    .string({ required_error: 'Nome é obrigatório' })
+    .min(3, { message: 'Nome deve ter pelo menos 3 caracteres' }),
   lastname: z
-    .string()
-    .min(3, { message: 'Product Name must be at least 3 characters' }),
+    .string({ required_error: 'Sobrenome é obrigatório' })
+    .min(3, { message: 'Sobrenome deve ter pelo menos 3 caracteres' }),
   email: z
-    .string()
-    .email({ message: 'Product Name must be at least 3 characters' }),
+    .string({ required_error: 'Email é obrigatório' })
+    .email({ message: 'Email deve ser um email válido' }),
   contactno: z.coerce.number(),
-  country: z.string().min(1, { message: 'Please select a category' }),
-  city: z.string().min(1, { message: 'Please select a category' }),
-  // jobs array is for the dynamic fields
+  country: z.string().min(1, { message: 'Selecione um país' }),
+  city: z.string().min(1, { message: 'Selecione uma cidade' }),
+  // a matriz de empregos é para os campos dinâmicos
   jobs: z.array(
     z.object({
-      jobcountry: z.string().min(1, { message: 'Please select a category' }),
-      jobcity: z.string().min(1, { message: 'Please select a category' }),
+      jobcountry: z.string().min(1, { message: 'Selecione um país' }),
+      jobcity: z.string().min(1, { message: 'Selecione uma cidade' }),
       jobtitle: z
         .string()
-        .min(3, { message: 'Product Name must be at least 3 characters' }),
+        .min(3, { message: 'Cargo deve ter pelo menos 3 caracteres' }),
       employer: z
         .string()
-        .min(3, { message: 'Product Name must be at least 3 characters' }),
+        .min(3, { message: 'Empregador deve ter pelo menos 3 caracteres' }),
       startdate: z
         .string()
         .refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
-          message: 'Start date should be in the format YYYY-MM-DD'
+          message: 'Data de início deve ser no formato YYYY-MM-DD'
         }),
       enddate: z.string().refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
-        message: 'End date should be in the format YYYY-MM-DD'
+        message: 'Data de término deve ser no formato YYYY-MM-DD'
       })
     })
   )

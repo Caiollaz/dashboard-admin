@@ -11,7 +11,7 @@ export type Product = {
   updated_at: string;
 };
 
-//Info: The following data is used for the sidebar navigation and Cmd K bar.
+//Info: Os dados a seguir são usados ​​para a navegação da barra lateral e barra Cmd K.
 export const navItems: NavItem[] = [
   {
     title: 'Dashboard',
@@ -19,36 +19,31 @@ export const navItems: NavItem[] = [
     icon: 'dashboard',
     isActive: false,
     shortcut: ['d', 'd'],
-    items: [] // Empty array as there are no child items for Dashboard
+    items: [] // Matriz vazia porque não há itens filhos para o Dashboard
   },
   {
-    title: 'Product',
+    title: 'Produtos',
     url: '/dashboard/product',
     icon: 'product',
     shortcut: ['p', 'p'],
     isActive: false,
-    items: [] // No child items
+    items: [] // Nenhum item filho
   },
   {
-    title: 'Account',
-    url: '#', // Placeholder as there is no direct link for the parent
-    icon: 'billing',
-    isActive: true,
-
-    items: [
-      {
-        title: 'Profile',
-        url: '/dashboard/profile',
-        icon: 'userPen',
-        shortcut: ['m', 'm']
-      },
-      {
-        title: 'Login',
-        shortcut: ['l', 'l'],
-        url: '/',
-        icon: 'login'
-      }
-    ]
+    title: 'Clientes',
+    url: '/dashboard/cliente',
+    icon: 'user',
+    shortcut: ['c', 'c'],
+    isActive: false,
+    items: [] // Nenhum item filho
+  },
+  {
+    title: 'Academias',
+    url: '/dashboard/academia',
+    icon: 'dumbbell',
+    shortcut: ['a', 'a'],
+    isActive: false,
+    items: [] // Nenhum item filho
   },
   {
     title: 'Kanban',
@@ -56,7 +51,21 @@ export const navItems: NavItem[] = [
     icon: 'kanban',
     shortcut: ['k', 'k'],
     isActive: false,
-    items: [] // No child items
+    items: [] // Nenhum item filho
+  },
+  {
+    title: 'Configurações',
+    url: '#', // Espaço reservado, pois não há link direto para o pai
+    icon: 'userCog',
+    isActive: true,
+    items: [
+      {
+        title: 'Perfil',
+        url: '/dashboard/profile',
+        icon: 'userPen',
+        shortcut: ['m', 'm']
+      }
+    ]
   }
 ];
 
@@ -68,46 +77,3 @@ export interface SaleUser {
   image: string;
   initials: string;
 }
-
-export const recentSalesData: SaleUser[] = [
-  {
-    id: 1,
-    name: 'Olivia Martin',
-    email: 'olivia.martin@email.com',
-    amount: '+$1,999.00',
-    image: 'https://api.slingacademy.com/public/sample-users/1.png',
-    initials: 'OM'
-  },
-  {
-    id: 2,
-    name: 'Jackson Lee',
-    email: 'jackson.lee@email.com',
-    amount: '+$39.00',
-    image: 'https://api.slingacademy.com/public/sample-users/2.png',
-    initials: 'JL'
-  },
-  {
-    id: 3,
-    name: 'Isabella Nguyen',
-    email: 'isabella.nguyen@email.com',
-    amount: '+$299.00',
-    image: 'https://api.slingacademy.com/public/sample-users/3.png',
-    initials: 'IN'
-  },
-  {
-    id: 4,
-    name: 'William Kim',
-    email: 'will@email.com',
-    amount: '+$99.00',
-    image: 'https://api.slingacademy.com/public/sample-users/4.png',
-    initials: 'WK'
-  },
-  {
-    id: 5,
-    name: 'Sofia Davis',
-    email: 'sofia.davis@email.com',
-    amount: '+$39.00',
-    image: 'https://api.slingacademy.com/public/sample-users/5.png',
-    initials: 'SD'
-  }
-];
