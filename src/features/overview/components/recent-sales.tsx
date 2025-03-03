@@ -44,7 +44,9 @@ export function RecentSales() {
       <Card>
         <CardHeader>
           <CardTitle>Vendas recentes</CardTitle>
-          <CardDescription>Você fez 265 vendas este mês.</CardDescription>
+          <CardDescription>
+            Você fez {recentSales.length} vendas este mês.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className='space-y-8'>
@@ -68,7 +70,9 @@ export function RecentSales() {
     <Card>
       <CardHeader>
         <CardTitle>Vendas recentes</CardTitle>
-        <CardDescription>Você fez 265 vendas este mês.</CardDescription>
+        <CardDescription>
+          Você fez {recentSales.length} vendas este mês.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className='space-y-8'>
