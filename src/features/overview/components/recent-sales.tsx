@@ -67,7 +67,7 @@ export function RecentSales() {
   }
 
   return (
-    <Card>
+    <Card className='flex h-[435px] flex-col'>
       <CardHeader>
         <CardTitle>Vendas recentes</CardTitle>
         <CardDescription>

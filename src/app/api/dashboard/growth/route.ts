@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth';
 import { NextResponse } from 'next/server';
+import { db } from '@/lib/db';
 
 export async function GET() {
   try {
@@ -9,6 +10,10 @@ export async function GET() {
     if (!session) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
+
+    // Buscar dados reais de academias e clientes
+    const gyms = await db.academias.findMany();
+    const clients = await db.clientes.findMany();
 
     // Gerar dados simulados para evitar erros com o modelo Prisma
     const monthlyData = [];
@@ -20,9 +25,9 @@ export async function GET() {
 
       const monthName = monthDate.toLocaleString('pt-BR', { month: 'long' });
 
-      // Dados simulados com valores aleatórios
-      const gymsCount = Math.floor(Math.random() * 10) + 5;
-      const clientsCount = Math.floor(Math.random() * 20) + 10;
+      // Dados reais
+      const gymsCount = gyms.length;
+      const clientsCount = clients.length;
 
       monthlyData.push({
         month: monthName.charAt(0).toUpperCase() + monthName.slice(1),
@@ -50,10 +55,6 @@ export async function GET() {
 
     return NextResponse.json(growthData);
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : 'Erro desconhecido';
-    console.error('Erro ao buscar dados de crescimento:', errorMessage);
-
     return NextResponse.json(
       { error: 'Erro ao processar a solicitação' },
       { status: 500 }

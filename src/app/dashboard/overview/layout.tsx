@@ -42,9 +42,9 @@ export default function OverViewLayout({
               </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>R$ 45,231.89</div>
+              <div className='text-2xl font-bold'>R$ 0</div>
               <p className='text-xs text-muted-foreground'>
-                +20.1% em relação ao mês passado
+                0% em relação ao mês passado
               </p>
             </CardContent>
           </Card>
@@ -67,9 +67,9 @@ export default function OverViewLayout({
               </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>+2350</div>
+              <div className='text-2xl font-bold'>0</div>
               <p className='text-xs text-muted-foreground'>
-                +180.1% em relação ao mês passado
+                0% em relação ao mês passado
               </p>
             </CardContent>
           </Card>
@@ -91,9 +91,9 @@ export default function OverViewLayout({
               </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>+12,234</div>
+              <div className='text-2xl font-bold'>0</div>
               <p className='text-xs text-muted-foreground'>
-                +19% em relação ao mês passado
+                0% em relação ao mês passado
               </p>
             </CardContent>
           </Card>
@@ -116,9 +116,9 @@ export default function OverViewLayout({
               </svg>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>+573</div>
+              <div className='text-2xl font-bold'>0</div>
               <p className='text-xs text-muted-foreground'>
-                +201 desde a última hora
+                0 desde a última hora
               </p>
             </CardContent>
           </Card>

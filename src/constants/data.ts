@@ -19,7 +19,7 @@ export const navItems: NavItem[] = [
     icon: 'dashboard',
     isActive: false,
     shortcut: ['d', 'd'],
-    items: [] // Matriz vazia porque não há itens filhos para o Dashboard
+    items: []
   },
   {
     title: 'Produtos',
@@ -27,23 +27,7 @@ export const navItems: NavItem[] = [
     icon: 'product',
     shortcut: ['p', 'p'],
     isActive: false,
-    items: [] // Nenhum item filho
-  },
-  {
-    title: 'Clientes',
-    url: '/dashboard/cliente',
-    icon: 'user',
-    shortcut: ['c', 'c'],
-    isActive: false,
-    items: [] // Nenhum item filho
-  },
-  {
-    title: 'Academias',
-    url: '/dashboard/academia',
-    icon: 'dumbbell',
-    shortcut: ['a', 'a'],
-    isActive: false,
-    items: [] // Nenhum item filho
+    items: []
   },
   {
     title: 'Kanban',
@@ -51,18 +35,27 @@ export const navItems: NavItem[] = [
     icon: 'kanban',
     shortcut: ['k', 'k'],
     isActive: false,
-    items: [] // Nenhum item filho
+    items: []
   },
   {
     title: 'Configurações',
-    url: '#', // Espaço reservado, pois não há link direto para o pai
+    url: '#',
     icon: 'userCog',
     isActive: true,
     items: [
       {
+        title: 'Clientes',
+        url: '/dashboard/cliente',
+        shortcut: ['c', 'c']
+      },
+      {
+        title: 'Academias',
+        url: '/dashboard/academia',
+        shortcut: ['a', 'a']
+      },
+      {
         title: 'Usuarios',
         url: '/dashboard/user',
-        icon: 'userPen',
         shortcut: ['u', 'u']
       }
     ]
