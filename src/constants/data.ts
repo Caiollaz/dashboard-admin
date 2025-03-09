@@ -60,10 +60,10 @@ export const navItems: NavItem[] = [
     isActive: true,
     items: [
       {
-        title: 'Perfil',
-        url: '/dashboard/profile',
+        title: 'Usuarios',
+        url: '/dashboard/user',
         icon: 'userPen',
-        shortcut: ['m', 'm']
+        shortcut: ['u', 'u']
       }
     ]
   }

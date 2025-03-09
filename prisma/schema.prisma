@@ -8,14 +8,43 @@ datasource db {
 }
 
 model Usuarios {
-  id        String    @id @default(cuid())
-  nome      String
-  email     String
-  senha     String
-  clienteId String
-  deleted   DateTime?
+  id            String    @id @default(cuid())
+  nome          String
+  sobrenome     String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  contas        Contas[]
+  clienteId     String
+  deleted       DateTime?
 
-  cliente Clientes @relation(fields: [clienteId], references: [id])
+  cliente   Clientes @relation(fields: [clienteId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contas {
+  id                       String    @id @default(cuid())
+  userId                   String    @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?   @db.Text
+  access_token             String?   @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?   @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     Usuarios? @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Clientes {
@@ -90,6 +119,7 @@ model Alunos {
   alunosExamesGraducoes AlunosExamesGraducao[]
   alunosGraducoes       AlunosGraducao[]
   cobrancas             Cobrancas[]
+  Chamada               Chamada[]
 }
 
 model AlunosGraducao {
@@ -98,7 +128,9 @@ model AlunosGraducao {
   graduacoesId  String?
   modalidadesId String
   deleted       DateTime?
+  turmasId      String?
 
+  Turmas     Turmas?     @relation(fields: [turmasId], references: [id])
   graduacao  Graduacoes? @relation(fields: [graduacoesId], references: [id])
   modalidade Modalidades @relation(fields: [modalidadesId], references: [id])
   aluno      Alunos      @relation(fields: [alunosId], references: [id])
@@ -149,6 +181,7 @@ model Modalidades {
   examesGraduacoes ExamesGraduacao[]
   graduacoes       Graduacoes[]
   alunosGraducoes  AlunosGraducao[]
+  Turmas           Turmas[]
 }
 
 model Graduacoes {
@@ -182,6 +215,7 @@ model Agendas {
   academia    Academias    @relation(fields: [academiasId], references: [id])
   modalidade  Modalidades  @relation(fields: [modalidadesId], references: [id])
   professores Professores? @relation(fields: [professorId], references: [id])
+  Chamada     Chamada[]
 }
 
 model ExamesGraduacao {
@@ -278,8 +312,28 @@ model Professores {
 }
 
 model Admin {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String?
+  id       String  @id @default(uuid())
+  email    String  @unique
+  password String
+  name     String?
+}
+
+model Chamada {
+  id        String   @id @default(cuid())
+  dataHora  DateTime @default(now())
+  agendasId String
+  alunosId  String
+
+  aluno  Alunos  @relation(fields: [alunosId], references: [id])
+  agenda Agendas @relation(fields: [agendasId], references: [id])
+}
+
+model Turmas {
+  id            String   @id @default(cuid())
+  dataHora      DateTime @default(now())
+  nome          String
+  modalidadesId String
+
+  modalidade     Modalidades      @relation(fields: [modalidadesId], references: [id])
+  AlunosGraducao AlunosGraducao[]
 }
