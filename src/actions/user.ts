@@ -4,7 +4,7 @@ import { getUserByEmail, getUserById } from '@/data/user';
 import {
   IRegisterUser,
   RegisterUserSchema
-} from '@/features/users/schema/RegisterUserSchema';
+} from '@/features/users/schema/RegisterUser.schema';
 import { db } from '@/lib/db';
 import { Usuarios } from '@prisma/client';
 import bcrypt, { compare } from 'bcrypt';
@@ -16,8 +16,7 @@ export async function registerUser(data: IRegisterUser) {
     return { error: 'Campos inválidos' };
   }
 
-  const { email, firstName, lastName, password, clienteId } =
-    validatedFields.data;
+  const { nome, sobrenome, email, password, clienteId } = validatedFields.data;
 
   const userExists = await getUserByEmail(email);
 
@@ -27,17 +26,17 @@ export async function registerUser(data: IRegisterUser) {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const updatedUser = await db.usuarios.create({
+  const newUser = await db.usuarios.create({
     data: {
-      nome: firstName,
-      sobrenome: lastName,
+      nome,
+      sobrenome,
       email,
       password: hashedPassword,
       clienteId: clienteId
     }
   });
 
-  if (!updatedUser) {
+  if (!newUser) {
     return { error: 'Erro ao criar usuário' };
   }
 
@@ -59,7 +58,7 @@ export async function updateUser(data: Usuarios) {
   }
 
   const updatedUser = await db.usuarios.update({
-    where: { email: data.email },
+    where: { id: data.id },
     data: {
       ...data,
       password: data.password

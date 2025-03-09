@@ -11,8 +11,8 @@ export const checkPasswordStrength = (password: string) => {
 };
 
 export const RegisterUserSchema = z.object({
-  firstName: z.string().min(1, { message: 'Nome é obrigatório' }),
-  lastName: z.string().min(1, { message: 'Sobrenome é obrigatório' }),
+  nome: z.string().min(1, { message: 'Nome é obrigatório' }),
+  sobrenome: z.string().min(1, { message: 'Sobrenome é obrigatório' }),
   email: z.string().email({ message: 'Email inválido' }),
   password: z
     .string()

@@ -18,7 +18,7 @@ import { toast } from 'sonner';
 import {
   IRegisterUser,
   RegisterUserSchema
-} from '../schema/RegisterUserSchema';
+} from '../schema/RegisterUser.schema';
 import { useTransition } from 'react';
 import { registerUser, updateUser } from '@/actions/user';
 import { Loader2 } from 'lucide-react';
@@ -35,8 +35,8 @@ export default function UserForm({ usuario }: UserFormProps) {
   const form = useForm<IRegisterUser>({
     resolver: zodResolver(RegisterUserSchema),
     defaultValues: {
-      firstName: usuario?.nome || '',
-      lastName: usuario?.sobrenome || '',
+      nome: usuario?.nome || '',
+      sobrenome: usuario?.sobrenome || '',
       email: usuario?.email || '',
       clienteId: usuario?.clienteId || '',
       password: usuario?.password || ''
@@ -58,11 +58,7 @@ export default function UserForm({ usuario }: UserFormProps) {
         }
 
         const uptUser: any = {
-          ...usuario,
-          nome: data.firstName ?? usuario?.nome,
-          sobrenome: data.lastName ?? usuario?.sobrenome,
-          email: data.email ?? usuario?.email,
-          password: data.password
+          ...data
         };
 
         await updateUser(uptUser).then((res) => {
@@ -91,7 +87,7 @@ export default function UserForm({ usuario }: UserFormProps) {
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
           <FormField
             control={form.control}
-            name='firstName'
+            name='nome'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nome</FormLabel>
@@ -104,7 +100,7 @@ export default function UserForm({ usuario }: UserFormProps) {
           />
           <FormField
             control={form.control}
-            name='lastName'
+            name='sobrenome'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Sobrenome</FormLabel>

@@ -15,26 +15,25 @@ import { Clientes } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
-
-const formSchema = z.object({
-  nome: z.string().min(1, 'Nome é obrigatório'),
-  cnpj: z.string().min(1, 'CNPJ é obrigatório'),
-  desconto: z.coerce.number().min(0).max(100)
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import {
+  IRegisterClient,
+  RegisterClientSchema
+} from '../schema/RegisterCliente.schema';
+import { useTransition } from 'react';
+import { registerClient, updateClient } from '@/actions/client';
+import { Loader2 } from 'lucide-react';
 
 interface ClienteFormProps {
   cliente: Clientes | null;
 }
 
 export default function ClienteForm({ cliente }: ClienteFormProps) {
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const isNew = !cliente;
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<IRegisterClient>({
+    resolver: zodResolver(RegisterClientSchema),
     defaultValues: {
       nome: cliente?.nome || '',
       cnpj: cliente?.cnpj || '',
@@ -42,22 +41,42 @@ export default function ClienteForm({ cliente }: ClienteFormProps) {
     }
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: IRegisterClient) => {
     try {
-      // Aqui você implementaria a lógica para salvar no banco de dados
-      // usando uma API route ou action
+      startTransition(async () => {
+        if (isNew) {
+          await registerClient(data).then((res) => {
+            if (res?.error) {
+              toast.error(res.error);
+              return;
+            }
 
-      toast.success(
-        isNew
-          ? 'Cliente criado com sucesso!'
-          : 'Cliente atualizado com sucesso!'
-      );
-      router.push('/dashboard/cliente');
-      router.refresh();
+            handleSuccess(res.success);
+          });
+        }
+
+        const uptClient: any = {
+          ...data
+        };
+
+        await updateClient(uptClient).then((res) => {
+          if (res?.error) {
+            toast.error(res.error);
+            return;
+          }
+
+          handleSuccess(res.success);
+        });
+      });
     } catch (error) {
       toast.error('Ocorreu um erro ao salvar o cliente.');
-      console.error(error);
     }
+  };
+
+  const handleSuccess = (message?: string) => {
+    toast.success(message);
+    router.push('/dashboard/cliente');
+    router.refresh();
   };
 
   return (
@@ -104,7 +123,8 @@ export default function ClienteForm({ cliente }: ClienteFormProps) {
             )}
           />
         </div>
-        <Button type='submit' className='ml-auto'>
+        <Button type='submit' className='ml-auto' disabled={isPending}>
+          {isPending && <Loader2 className='animate-spin' />}
           {isNew ? 'Criar' : 'Salvar alterações'}
         </Button>
       </form>

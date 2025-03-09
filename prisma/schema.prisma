@@ -50,7 +50,7 @@ model Contas {
 model Clientes {
   id       String    @id @default(cuid())
   nome     String
-  cnpj     String
+  cnpj     String    @unique
   desconto Int       @default(0)
   deleted  DateTime?
 

@@ -22,19 +22,10 @@ import { Academias, Clientes } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
-
-const formSchema = z.object({
-  nome: z.string().min(1, 'Nome é obrigatório'),
-  rua: z.string().min(1, 'Rua é obrigatória'),
-  cidade: z.string().min(1, 'Cidade é obrigatória'),
-  estado: z.string().min(1, 'Estado é obrigatório'),
-  cep: z.string().min(1, 'CEP é obrigatório'),
-  numero: z.string().min(1, 'Número é obrigatório'),
-  clienteId: z.string().min(1, 'Cliente é obrigatório')
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import { useTransition } from 'react';
+import { IRegisterGYM, RegisterGymSchema } from '../schema/RegisterGym.schema';
+import { Loader2 } from 'lucide-react';
+import { registerGym, updateGym } from '@/actions/gym';
 
 interface AcademiaFormProps {
   academia: Academias | null;
@@ -45,11 +36,12 @@ export default function AcademiaForm({
   academia,
   clientes
 }: AcademiaFormProps) {
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const isNew = !academia;
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<IRegisterGYM>({
+    resolver: zodResolver(RegisterGymSchema),
     defaultValues: {
       nome: academia?.nome || '',
       rua: academia?.rua || '',
@@ -61,22 +53,42 @@ export default function AcademiaForm({
     }
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: IRegisterGYM) => {
     try {
-      // Aqui você implementaria a lógica para salvar no banco de dados
-      // usando uma API route ou action
+      startTransition(async () => {
+        if (isNew) {
+          await registerGym(data).then((res) => {
+            if (res?.error) {
+              toast.error(res.error);
+              return;
+            }
 
-      toast.success(
-        isNew
-          ? 'Academia criada com sucesso!'
-          : 'Academia atualizada com sucesso!'
-      );
-      router.push('/dashboard/academia');
-      router.refresh();
+            handleSuccess(res.success);
+          });
+        }
+
+        const uptGym: any = {
+          ...data
+        };
+
+        await updateGym(uptGym).then((res) => {
+          if (res?.error) {
+            toast.error(res.error);
+            return;
+          }
+
+          handleSuccess(res.success);
+        });
+      });
     } catch (error) {
       toast.error('Ocorreu um erro ao salvar a academia.');
-      console.error(error);
     }
+  };
+
+  const handleSuccess = (message?: string) => {
+    toast.success(message);
+    router.push('/dashboard/academia');
+    router.refresh();
   };
 
   return (
@@ -189,7 +201,8 @@ export default function AcademiaForm({
             )}
           />
         </div>
-        <Button type='submit' className='ml-auto'>
+        <Button type='submit' className='ml-auto' disabled={isPending}>
+          {isPending && <Loader2 className='animate-spin' />}
           {isNew ? 'Criar' : 'Salvar alterações'}
         </Button>
       </form>
