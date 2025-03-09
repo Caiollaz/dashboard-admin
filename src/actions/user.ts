@@ -1,4 +1,3 @@
-// src/actions/updateUser.ts
 'use server';
 
 import { getUserByEmail, getUserById } from '@/data/user';
