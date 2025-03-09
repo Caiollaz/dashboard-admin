@@ -19,6 +19,7 @@ model Usuarios {
   clienteId     String
   deleted       DateTime?
 
+  admin Admin? @relation
   cliente   Clientes @relation(fields: [clienteId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -312,10 +313,10 @@ model Professores {
 }
 
 model Admin {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  name     String?
+  id       String  @id @default(cuid())
+  usuarioId String  @unique
+
+  usuario   Usuarios @relation(fields: [usuarioId], references: [id])
 }
 
 model Chamada {

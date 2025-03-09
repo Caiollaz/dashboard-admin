@@ -17,13 +17,23 @@ export const authConfig: NextAuthOptions = {
         }
 
         try {
-          const user = await prisma.admin.findUnique({
+          const user = await prisma.usuarios.findUnique({
             where: {
               email: credentials.email
             }
           });
 
           if (!user) {
+            return null;
+          }
+
+          const userAdmin = await prisma.admin.findUnique({
+            where: {
+              usuarioId: user?.id
+            }
+          });
+
+          if (!userAdmin) {
             return null;
           }
 
@@ -39,7 +49,7 @@ export const authConfig: NextAuthOptions = {
           return {
             id: user.id,
             email: user.email,
-            name: user.name
+            name: user.nome
           };
         } catch (error) {
           return null;
