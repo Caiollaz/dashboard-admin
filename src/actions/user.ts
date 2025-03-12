@@ -16,13 +16,8 @@ export async function registerUser(data: IRegisterUser) {
     return { error: 'Campos inválidos' };
   }
 
-  const { nome, sobrenome, email, password, clienteId } = validatedFields.data;
-
-  const userExists = await getUserByEmail(email);
-
-  if (!userExists) {
-    return { error: 'Usuário não encontrado' };
-  }
+  const { nome, sobrenome, email, password, clienteId, academiaId } =
+    validatedFields.data;
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -32,7 +27,8 @@ export async function registerUser(data: IRegisterUser) {
       sobrenome,
       email,
       password: hashedPassword,
-      clienteId: clienteId
+      clienteId: clienteId,
+      academiaId: academiaId
     }
   });
 

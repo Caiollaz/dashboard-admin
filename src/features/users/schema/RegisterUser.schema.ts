@@ -21,7 +21,8 @@ export const RegisterUserSchema = z.object({
       message:
         'A senha deve ser forte. Inclua letras maiúsculas, minúsculas, números e caracteres especiais.'
     }),
-  clienteId: z.string().min(1, { message: 'ID do cliente é obrigatório' })
+  clienteId: z.string().min(1, { message: 'ID do cliente é obrigatório' }),
+  academiaId: z.string().min(1, { message: 'ID da academia é obrigatório' })
 });
 
 export type IRegisterUser = z.infer<typeof RegisterUserSchema>;

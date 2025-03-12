@@ -39,6 +39,7 @@ export default function UserForm({ usuario }: UserFormProps) {
       sobrenome: usuario?.sobrenome || '',
       email: usuario?.email || '',
       clienteId: usuario?.clienteId || '',
+      academiaId: usuario?.academiaId || '',
       password: usuario?.password || ''
     }
   });
@@ -145,6 +146,19 @@ export default function UserForm({ usuario }: UserFormProps) {
                 <FormLabel>ID do cliente</FormLabel>
                 <FormControl>
                   <Input placeholder='ID do cliente' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='academiaId'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ID do cliente</FormLabel>
+                <FormControl>
+                  <Input placeholder='ID da academia' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

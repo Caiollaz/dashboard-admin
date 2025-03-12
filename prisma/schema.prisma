@@ -12,17 +12,19 @@ model Usuarios {
   nome          String
   sobrenome     String?
   email         String    @unique
-  emailVerified DateTime?
+  emailVerified Boolean?
   password      String
   image         String?
   contas        Contas[]
   clienteId     String
+  academiaId    String
   deleted       DateTime?
 
-  admin Admin? @relation
-  cliente   Clientes @relation(fields: [clienteId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  admin     Admin?    @relation
+  cliente   Clientes  @relation(fields: [clienteId], references: [id])
+  academia  Academias @relation(fields: [academiaId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Contas {
@@ -90,6 +92,7 @@ model Academias {
   examesGraduacoes ExamesGraduacao[]
   cobrancas        Cobrancas[]
   professores      Professores[]
+  Usuarios         Usuarios[]
 }
 
 enum Status {
@@ -313,10 +316,10 @@ model Professores {
 }
 
 model Admin {
-  id       String  @id @default(cuid())
-  usuarioId String  @unique
+  id        String @id @default(cuid())
+  usuarioId String @unique
 
-  usuario   Usuarios @relation(fields: [usuarioId], references: [id])
+  usuario Usuarios @relation(fields: [usuarioId], references: [id])
 }
 
 model Chamada {
